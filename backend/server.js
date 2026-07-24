@@ -12,7 +12,7 @@ const aiRoutes = require("./routes/aiRoutes");
 
 const app = express();
 //Connect DataBase
-//connectDB();
+connectDB();
 
 // Middleware
 app.use(cors());
