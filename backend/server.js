@@ -2,20 +2,23 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-const connectDB = require("./config/db");
-
 dotenv.config();
 
-const app = express();
+const connectDB = require("./config/db");
 
-// Connect to MongoDB
-connectDB();
+const aiRoutes = require("./routes/aiRoutes");
+
+const app = express();
+//connectDB();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// AI Routes
+app.use("/api/ai", aiRoutes);
+
+// Home Route
 app.get("/", (req, res) => {
   res.send("FlashMind AI Backend is Running 🚀");
 });
