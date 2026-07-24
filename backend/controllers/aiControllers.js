@@ -2,7 +2,7 @@ const { generateFlashcards } = require("../services/geminiService");
 
 const generateAIFlashcards = async (req, res) => {
   try {
-    const { topic } = req.body;
+    const { topic, count, difficulty, } = req.body;
 
     if (!topic) {
       return res.status(400).json({
@@ -11,7 +11,7 @@ const generateAIFlashcards = async (req, res) => {
       });
     }
 
-    const flashcards = await generateFlashcards(topic);
+    const flashcards = await generateFlashcards(topic, count, difficulty);
 
     res.status(200).json({
       success: true,

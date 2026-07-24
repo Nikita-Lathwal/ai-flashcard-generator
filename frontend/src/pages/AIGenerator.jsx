@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { generateFlashcards as generateAICards } from "../services/aiService";
 
 const AIGenerator = () => {
   const [topic, setTopic] = useState("");
@@ -7,27 +8,24 @@ const AIGenerator = () => {
   const [loading, setLoading] = useState(false);
   const [cards, setCards] = useState([]);
 
-  const generateFlashcards = () => {
-    setLoading(true);
+  const generateFlashcards = async () => {
+    if (!topic.trim()) {
+      alert("Please enter a topic.");
+      return;
+    }
 
-    setTimeout(() => {
-      setCards([
-        {
-          question: `What is ${topic}?`,
-          answer: `${topic} is an important concept used in computer science.`
-        },
-        {
-          question: `Why is ${topic} important?`,
-          answer: `${topic} helps solve real-world problems efficiently.`
-        },
-        {
-          question: `Where is ${topic} used?`,
-          answer: `${topic} is widely used in software development and AI.`
-        }
-      ]);
+    try {
+      setLoading(true);
 
+      const data = await generateAICards(topic, count, difficulty);
+
+      setCards(data.flashcards);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to generate flashcards.");
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   return (
