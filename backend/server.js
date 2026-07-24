@@ -5,14 +5,12 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const connectDB = require("./config/db");
-
 const aiRoutes = require("./routes/aiRoutes");
-//const deckRoutes = require("./routes/deckRoutes");
-//const flashcardRoutes = require("./routes/flashcardRoutes");
+
+// Connect Database
+connectDB();
 
 const app = express();
-//Connect DataBase
-connectDB();
 
 // Middleware
 app.use(cors());
@@ -20,8 +18,6 @@ app.use(express.json());
 
 // AI Routes
 app.use("/api/ai", aiRoutes);
-//app.use("/api/decks", deckRoutes);
-//app.use("/api/flashcards", flashcardRoutes);
 
 // Home Route
 app.get("/", (req, res) => {
