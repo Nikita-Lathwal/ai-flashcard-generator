@@ -27,6 +27,9 @@ const AIGenerator = () => {
       setLoading(false);
     }
   };
+    const handleSave = () => {
+    alert("Save to Deck feature will be available after Deck & Flashcard APIs are integrated.");
+  };
 
   return (
     <div
@@ -121,7 +124,9 @@ const AIGenerator = () => {
         ))}
 
       {cards.length > 0 && (
-        <button style={{ marginTop: "30px" }}>
+        <button 
+          style={{ marginTop: "30px" }}
+          onClick={handleSave}>
           💾 Save to Deck
         </button>
       )}
