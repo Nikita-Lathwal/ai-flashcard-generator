@@ -63,7 +63,7 @@ function App() {
 
       {/* Study */}
       <Route
-        path="/study-mode"
+        path="/study-mode/:id"
         element={
           <ProtectedRoute>
             <StudyMode />

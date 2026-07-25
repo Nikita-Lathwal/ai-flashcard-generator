@@ -1,23 +1,44 @@
-import { useState } from "react";
-
-const flashcards = [
-  {
-    question: "What is an Array?",
-    answer: "A linear data structure that stores elements in contiguous memory."
-  },
-  {
-    question: "What is a Linked List?",
-    answer: "A collection of nodes connected using pointers."
-  },
-  {
-    question: "What is a Stack?",
-    answer: "A LIFO (Last In First Out) data structure."
-  }
-];
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const StudyMode = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [flashcards, setFlashcards] = useState([]);
   const [current, setCurrent] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    const fetchFlashcards = async () => {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:5000/api/flashcards"
+        );
+
+        const deckCards = data.filter(
+          (card) => card.deckId?.toString() === id
+        );
+
+        setFlashcards(deckCards);
+
+      } catch (error) {
+        console.log(error);
+
+      } finally {
+        setLoading(false);
+      }
+    };
+
+
+    fetchFlashcards();
+
+  }, [id]);
+
+
 
   const nextCard = () => {
     if (current < flashcards.length - 1) {
@@ -26,6 +47,7 @@ const StudyMode = () => {
     }
   };
 
+
   const previousCard = () => {
     if (current > 0) {
       setCurrent(current - 1);
@@ -33,7 +55,28 @@ const StudyMode = () => {
     }
   };
 
-  const progress = ((current + 1) / flashcards.length) * 100;
+
+  if (loading) {
+    return (
+      <div style={{ padding: "30px", textAlign: "center" }}>
+        <h2>Loading flashcards...</h2>
+      </div>
+    );
+  }
+
+
+  if (flashcards.length === 0) {
+    return (
+      <div style={{ padding: "30px", textAlign: "center" }}>
+        <h2>No flashcards available for this deck.</h2>
+      </div>
+    );
+  }
+
+
+  const progress =
+    ((current + 1) / flashcards.length) * 100;
+
 
   return (
     <div
@@ -44,11 +87,15 @@ const StudyMode = () => {
         padding: "20px"
       }}
     >
+
       <h1>📖 Study Mode</h1>
+
 
       <h3>
         Question {current + 1} / {flashcards.length}
       </h3>
+
+
 
       <div
         style={{
@@ -59,15 +106,24 @@ const StudyMode = () => {
           marginTop: "20px"
         }}
       >
-        <h2>{flashcards[current].question}</h2>
+
+        <h2>
+          {flashcards[current].question}
+        </h2>
+
 
         {showAnswer && (
           <>
             <hr />
-            <p>{flashcards[current].answer}</p>
+            <p>
+              {flashcards[current].answer}
+            </p>
           </>
         )}
+
       </div>
+
+
 
       <button
         onClick={() => setShowAnswer(!showAnswer)}
@@ -76,10 +132,18 @@ const StudyMode = () => {
         {showAnswer ? "Hide Answer" : "Flip Card"}
       </button>
 
+
+
+
       <div style={{ marginTop: "30px" }}>
-        <button onClick={previousCard} disabled={current === 0}>
+
+        <button
+          onClick={previousCard}
+          disabled={current === 0}
+        >
           ⬅ Previous
         </button>
+
 
         <button
           onClick={nextCard}
@@ -88,7 +152,11 @@ const StudyMode = () => {
         >
           Next ➡
         </button>
+
       </div>
+
+
+
 
       <div
         style={{
@@ -98,6 +166,7 @@ const StudyMode = () => {
           borderRadius: "10px"
         }}
       >
+
         <div
           style={{
             width: `${progress}%`,
@@ -106,17 +175,29 @@ const StudyMode = () => {
             borderRadius: "10px"
           }}
         />
+
       </div>
 
-      <p>{Math.round(progress)}% Completed</p>
+
+
+      <p>
+        {Math.round(progress)}% Completed
+      </p>
+
+
 
       {current === flashcards.length - 1 && (
-        <button style={{ marginTop: "20px" }}>
-          🎉 Finish Session
-        </button>
-      )}
+  <button
+    style={{ marginTop: "20px" }}
+    onClick={() => navigate(`/deck/${id}`)}
+  >
+    🎉 Finish Session
+  </button>
+)}
+
     </div>
   );
 };
+
 
 export default StudyMode;
