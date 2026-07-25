@@ -68,39 +68,45 @@ const Signup = () => {
 
           <input
             type="email"
+            name="email"
             placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
           />
 
           <input
             type="password"
+            name="password"
             placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
           />
 
           <input
             type="password"
+            name="confirmPassword"
             placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
           />
 
-          <button>
+          <button type="submit">
             Signup
           </button>
-
         </form>
 
         <span>
-
           Already have an account?
-
           <Link to="/login">
             Login
           </Link>
 
         </span>
-
       </div>
-
     </div>
-
   );
 };
 
