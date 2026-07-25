@@ -100,10 +100,7 @@ const Signup = () => {
 
         <span>
           Already have an account?
-          <Link to="/login">
-            Login
-          </Link>
-
+          <Link to="/login"> Login</Link>
         </span>
       </div>
     </div>
