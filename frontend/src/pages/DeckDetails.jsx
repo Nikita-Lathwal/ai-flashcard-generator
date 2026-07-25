@@ -319,101 +319,185 @@ const DeckDetails = () => {
 
 
 
-  return (
+    return (
 
-    <div style={{ padding: "30px" }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#f8fafc",
+        padding: "40px"
+      }}
+    >
 
+      {/* Deck Header */}
 
-      {editingDeck ? (
+      <div
+        style={{
+          background: "white",
+          padding: "30px",
+          borderRadius: "18px",
+          boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+          marginBottom: "30px"
+        }}
+      >
 
-        <div>
+        {editingDeck ? (
 
-          <input
-            value={deckData.title}
-            onChange={(e) =>
-              setDeckData({
-                ...deckData,
-                title: e.target.value
-              })
-            }
-            style={{
-              width: "100%",
-              padding: "10px"
-            }}
-          />
+          <>
 
+            <h2>Edit Deck</h2>
 
-          <br /><br />
-
-
-          <textarea
-            value={deckData.description}
-            onChange={(e) =>
-              setDeckData({
-                ...deckData,
-                description: e.target.value
-              })
-            }
-            style={{
-              width: "100%",
-              padding: "10px"
-            }}
-          />
-
-
-          <br /><br />
-
-
-          <button onClick={updateDeck}>
-            Save Deck
-          </button>
+            <input
+              value={deckData.title}
+              onChange={(e) =>
+                setDeckData({
+                  ...deckData,
+                  title: e.target.value
+                })
+              }
+              style={{
+                width:"100%",
+                padding:"12px",
+                borderRadius:"8px",
+                border:"1px solid #ddd"
+              }}
+            />
 
 
-          <button
-            onClick={() => setEditingDeck(false)}
-            style={{ marginLeft: "10px" }}
-          >
-            Cancel
-          </button>
+            <br /><br />
 
 
-        </div>
+            <textarea
+              value={deckData.description}
+              onChange={(e) =>
+                setDeckData({
+                  ...deckData,
+                  description:e.target.value
+                })
+              }
+              style={{
+                width:"100%",
+                padding:"12px",
+                borderRadius:"8px",
+                border:"1px solid #ddd"
+              }}
+            />
 
 
-      ) : (
-
-        <>
-
-          <h1>{deck.title}</h1>
-
-          <p>{deck.description}</p>
-
-        </>
-
-      )}
+            <br /><br />
 
 
+            <button
+              onClick={updateDeck}
+              style={{
+                background:"#2563eb",
+                color:"white",
+                border:"none",
+                padding:"12px 20px",
+                borderRadius:"8px",
+                cursor:"pointer"
+              }}
+            >
+              Save Deck
+            </button>
 
-      <hr />
+
+            <button
+              onClick={() => setEditingDeck(false)}
+              style={{
+                marginLeft:"10px",
+                padding:"12px 20px",
+                borderRadius:"8px",
+                cursor:"pointer"
+              }}
+            >
+              Cancel
+            </button>
 
 
+          </>
+
+
+        ) : (
+
+          <>
+
+            <h1>
+              📚 {deck.title}
+            </h1>
+
+
+            <p
+              style={{
+                color:"#64748b",
+                fontSize:"17px"
+              }}
+            >
+              {deck.description}
+            </p>
+
+
+            <button
+              onClick={startDeckEdit}
+              style={{
+                marginTop:"15px",
+                background:"#0f172a",
+                color:"white",
+                border:"none",
+                padding:"12px 20px",
+                borderRadius:"8px",
+                cursor:"pointer"
+              }}
+            >
+              Edit Deck
+            </button>
+
+
+            <button
+              onClick={deleteDeck}
+              style={{
+                marginLeft:"10px",
+                background:"#dc2626",
+                color:"white",
+                border:"none",
+                padding:"12px 20px",
+                borderRadius:"8px",
+                cursor:"pointer"
+              }}
+            >
+              Delete Deck
+            </button>
+
+
+          </>
+
+        )}
+
+      </div>
+
+
+
+
+
+      {/* Add Flashcard */}
 
       <button
         onClick={() =>
           setShowAddForm(!showAddForm)
         }
+        style={{
+          background:"#16a34a",
+          color:"white",
+          border:"none",
+          padding:"14px 22px",
+          borderRadius:"10px",
+          cursor:"pointer",
+          fontSize:"16px"
+        }}
       >
-        Add Flashcard
+        + Add Flashcard
       </button>
 
-
-
-      <button
-        onClick={startDeckEdit}
-        style={{ marginLeft: "10px" }}
-      >
-        Edit Deck
-      </button>
 
 
 
@@ -422,56 +506,69 @@ const DeckDetails = () => {
 
         <div
           style={{
-            border: "1px solid #ddd",
-            padding: "20px",
-            marginTop: "20px",
-            borderRadius: "10px"
+            background:"white",
+            marginTop:"20px",
+            padding:"25px",
+            borderRadius:"15px",
+            boxShadow:"0 4px 12px rgba(0,0,0,0.08)"
           }}
         >
 
-          <h3>Add New Flashcard</h3>
+          <h2>
+            Create Flashcard
+          </h2>
 
 
           <input
             placeholder="Question"
             value={newCard.question}
-            onChange={(e) =>
+            onChange={(e)=>
               setNewCard({
                 ...newCard,
-                question: e.target.value
+                question:e.target.value
               })
             }
+            style={{
+              width:"100%",
+              padding:"12px"
+            }}
           />
 
 
-          <br /><br />
+          <br/><br/>
 
 
           <textarea
             placeholder="Answer"
             value={newCard.answer}
-            onChange={(e) =>
+            onChange={(e)=>
               setNewCard({
                 ...newCard,
-                answer: e.target.value
+                answer:e.target.value
               })
             }
+            style={{
+              width:"100%",
+              padding:"12px"
+            }}
           />
 
 
-          <br /><br />
+          <br/><br/>
 
 
           <select
             value={newCard.difficulty}
-            onChange={(e) =>
+            onChange={(e)=>
               setNewCard({
                 ...newCard,
-                difficulty: e.target.value
+                difficulty:e.target.value
               })
             }
+            style={{
+              padding:"10px"
+            }}
           >
-
             <option>Easy</option>
             <option>Medium</option>
             <option>Hard</option>
@@ -479,10 +576,19 @@ const DeckDetails = () => {
           </select>
 
 
-          <br /><br />
+          <br/><br/>
 
 
-          <button onClick={addFlashcard}>
+          <button
+            onClick={addFlashcard}
+            style={{
+              background:"#2563eb",
+              color:"white",
+              border:"none",
+              padding:"12px 20px",
+              borderRadius:"8px"
+            }}
+          >
             Save Flashcard
           </button>
 
@@ -494,144 +600,164 @@ const DeckDetails = () => {
 
 
 
-      <h2>
+
+
+      <h2
+        style={{
+          marginTop:"35px"
+        }}
+      >
         Flashcards ({flashcards.length})
       </h2>
 
 
 
-      {flashcards.map((card) => (
+
+
+      <div
+        style={{
+          display:"grid",
+          gap:"20px"
+        }}
+      >
+
+      {flashcards.map((card)=>(
 
         <div
           key={card._id}
           style={{
-            border: "1px solid #ddd",
-            padding: "15px",
-            marginBottom: "15px",
-            borderRadius: "10px"
+            background:"white",
+            padding:"25px",
+            borderRadius:"15px",
+            boxShadow:"0 4px 12px rgba(0,0,0,0.08)"
           }}
         >
 
 
-          {editingId === card._id ? (
+        {editingId === card._id ? (
 
-            <>
+          <>
 
-              <input
-                value={editData.question}
-                onChange={(e) =>
-                  setEditData({
-                    ...editData,
-                    question: e.target.value
-                  })
-                }
-              />
-
-
-              <br /><br />
-
-
-              <textarea
-                value={editData.answer}
-                onChange={(e) =>
-                  setEditData({
-                    ...editData,
-                    answer: e.target.value
-                  })
-                }
-              />
+          <input
+            value={editData.question}
+            onChange={(e)=>
+              setEditData({
+                ...editData,
+                question:e.target.value
+              })
+            }
+            style={{
+              width:"100%",
+              padding:"10px"
+            }}
+          />
 
 
-              <br /><br />
+          <br/><br/>
 
 
-              <button
-                onClick={() =>
-                  updateFlashcard(card._id)
-                }
-              >
-                Save
-              </button>
+          <textarea
+            value={editData.answer}
+            onChange={(e)=>
+              setEditData({
+                ...editData,
+                answer:e.target.value
+              })
+            }
+            style={{
+              width:"100%",
+              padding:"10px"
+            }}
+          />
 
 
-            </>
+          <br/><br/>
 
 
-          ) : (
-
-            <>
-
-              <h3>
-                Q. {card.question}
-              </h3>
-
-
-              <p>
-                <strong>
-                  Answer:
-                </strong>{" "}
-                {card.answer}
-              </p>
+          <button
+            onClick={()=>
+              updateFlashcard(card._id)
+            }
+          >
+            Save
+          </button>
 
 
-              <p>
-                <strong>
-                  Difficulty:
-                </strong>{" "}
-                {card.difficulty}
-              </p>
+          </>
 
 
-              <button
-                onClick={() =>
-                  startEdit(card)
-                }
-              >
-                Edit
-              </button>
+        ) : (
+
+          <>
+
+          <h3>
+            ❓ {card.question}
+          </h3>
 
 
-              <button
-                onClick={() =>
-                  deleteFlashcard(card._id)
-                }
-                style={{
-                  marginLeft: "10px"
-                }}
-              >
-                Delete
-              </button>
+          <p>
+            <b>Answer:</b> {card.answer}
+          </p>
 
 
-            </>
+          <p>
+            <b>Difficulty:</b> {card.difficulty}
+          </p>
 
-          )}
 
+          <button
+            onClick={()=>
+              startEdit(card)
+            }
+          >
+            Edit
+          </button>
+
+
+          <button
+            onClick={()=>
+              deleteFlashcard(card._id)
+            }
+            style={{
+              marginLeft:"10px",
+              background:"#dc2626",
+              color:"white"
+            }}
+          >
+            Delete
+          </button>
+
+
+          </>
+
+        )}
 
         </div>
 
       ))}
 
+      </div>
 
 
-
-      <br />
-
-
-      <button onClick={deleteDeck}>
-        Delete Deck
-      </button>
 
 
 
       <Link to={`/study-mode/${id}`}>
+
         <button
           style={{
-            marginLeft: "10px"
+            marginTop:"30px",
+            background:"#7c3aed",
+            color:"white",
+            border:"none",
+            padding:"14px 25px",
+            borderRadius:"10px",
+            cursor:"pointer"
           }}
         >
-          Start Studying
+          📖 Start Studying
         </button>
+
       </Link>
 
 
