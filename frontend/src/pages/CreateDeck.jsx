@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const CreateDeck = () => {
   const navigate = useNavigate();
@@ -10,18 +11,42 @@ const CreateDeck = () => {
   const [difficulty, setDifficulty] = useState("Easy");
   const [color, setColor] = useState("#2563eb");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!title.trim()) {
-      alert("Please enter a deck title.");
-      return;
-    }
+  console.log("Create Deck button clicked");
 
-    alert("Deck created successfully! (Backend will be connected in Phase 2)");
+  if (!title.trim()) {
+    alert("Please enter a deck title.");
+    return;
+  }
+
+  try {
+    console.log("Sending request...");
+
+    const response = await axios.post(
+      "http://localhost:5000/api/decks",
+      {
+        title,
+        description,
+      }
+    );
+
+    console.log(response.data);
+
+    alert("Deck created successfully!");
 
     navigate("/dashboard");
-  };
+  } catch (error) {
+    console.log(error);
+    console.log(error.response);
+
+    alert(
+      error.response?.data?.message ||
+      "Failed to create deck."
+    );
+  }
+};
 
   const colors = [
     "#2563eb",
@@ -113,7 +138,9 @@ const CreateDeck = () => {
                 background: c,
                 cursor: "pointer",
                 border:
-                  color === c ? "4px solid black" : "2px solid #ddd",
+                  color === c
+                    ? "4px solid black"
+                    : "2px solid #ddd",
               }}
             />
           ))}
