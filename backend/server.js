@@ -6,6 +6,8 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const deckRoutes = require("./routes/deckRoutes");
+const flashcardRoutes = require("./routes/flashcardRoutes");
 
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
@@ -20,6 +22,8 @@ connectDB();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/api/decks", deckRoutes);
+app.use("/api/flashcards", flashcardRoutes);
 
 // Routes
 app.get("/", (req, res) => {
