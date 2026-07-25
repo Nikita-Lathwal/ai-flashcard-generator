@@ -10,6 +10,8 @@ import Profile from "./pages/Profile";
 import StudyMode from "./pages/StudyMode";
 import DeckDetails from "./pages/DeckDetails";
 
+import ProtectedRoute from "./components/ProtectedRoute";
+
 function App() {
   return (
     <Routes>
