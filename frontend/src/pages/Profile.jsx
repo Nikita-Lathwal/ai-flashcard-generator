@@ -1,16 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const navigate = useNavigate();
+
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+
+  const logoutHandler = () => {
+    localStorage.removeItem("userInfo");
+    navigate("/login");
+  };
+
   return (
     <div className="profile-page">
-
       <div className="profile-card">
-
         <h1>👤 My Profile</h1>
 
         <div className="profile-info">
-          <p><strong>Name:</strong> Demo User</p>
-          <p><strong>Email:</strong> demo@gmail.com</p>
+          <p>
+            <strong>Name:</strong> {user?.name}
+          </p>
+
+          <p>
+            <strong>Email:</strong> {user?.email}
+          </p>
         </div>
 
         <div className="profile-buttons">
@@ -18,13 +30,14 @@ const Profile = () => {
             <button>Dashboard</button>
           </Link>
 
-          <button className="logout-btn">
+          <button
+            className="logout-btn"
+            onClick={logoutHandler}
+          >
             Logout
           </button>
         </div>
-
       </div>
-
     </div>
   );
 };
