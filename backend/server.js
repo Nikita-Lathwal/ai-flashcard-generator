@@ -6,31 +6,36 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const deckRoutes = require("./routes/deckRoutes");
-const flashcardRoutes = require("./routes/flashcardRoutes");
-
-const connectDB = require("./config/db");
-const authRoutes = require("./routes/authRoutes");
 
 dotenv.config();
 
-const app = express();
+const connectDB = require("./config/db");
 
-// Connect to MongoDB
+// Routes
+const authRoutes = require("./routes/authRoutes");
+const deckRoutes = require("./routes/deckRoutes");
+const flashcardRoutes = require("./routes/flashcardRoutes");
+const aiRoutes = require("./routes/aiRoutes");
+
+// Connect Database
 connectDB();
+
+const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// API Routes
+app.use("/api/auth", authRoutes);
 app.use("/api/decks", deckRoutes);
 app.use("/api/flashcards", flashcardRoutes);
+app.use("/api/ai", aiRoutes);
 
-// Routes
+// Home Route
 app.get("/", (req, res) => {
   res.send("FlashMind AI Backend is Running 🚀");
 });
-
-app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
