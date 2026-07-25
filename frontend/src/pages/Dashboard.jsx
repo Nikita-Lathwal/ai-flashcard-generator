@@ -4,6 +4,8 @@ import DeckCard from "../components/DeckCard";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+
   return (
     <div className="dashboard">
       {/* Sidebar */}
@@ -13,7 +15,7 @@ const Dashboard = () => {
       <main className="dashboard-content">
         <div className="dashboard-header">
           <div>
-            <h1>Welcome Back 👋</h1>
+            <h1>Welcome Back 👋 {user?.name}</h1>
             <p>Continue your learning journey with FlashMind AI.</p>
           </div>
 
